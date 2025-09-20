@@ -33,6 +33,19 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        var currentPos = (_currX, _currY);
+        if (!_mazeMap.ContainsKey(currentPos) || !_mazeMap[currentPos][0]) // left is index 0
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var targetPos = (_currX - 1, _currY);
+        if (!_mazeMap.ContainsKey(targetPos))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currX--;
     }
 
     /// <summary>
@@ -42,6 +55,19 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        var currentPos = (_currX, _currY);
+        if (!_mazeMap.ContainsKey(currentPos) || !_mazeMap[currentPos][1]) // right is index 1
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var targetPos = (_currX + 1, _currY);
+        if (!_mazeMap.ContainsKey(targetPos))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currX++;
     }
 
     /// <summary>
@@ -51,6 +77,19 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        var currentPos = (_currX, _currY);
+        if (!_mazeMap.ContainsKey(currentPos) || !_mazeMap[currentPos][2]) // up is index 2
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var targetPos = (_currX, _currY - 1); // Up decreases y-coordinate
+        if (!_mazeMap.ContainsKey(targetPos))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currY--;
     }
 
     /// <summary>
@@ -60,6 +99,19 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        var currentPos = (_currX, _currY);
+        if (!_mazeMap.ContainsKey(currentPos) || !_mazeMap[currentPos][3]) // down is index 3
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var targetPos = (_currX, _currY + 1); // Down increases y-coordinate
+        if (!_mazeMap.ContainsKey(targetPos))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currY++;
     }
 
     public string GetStatus()
