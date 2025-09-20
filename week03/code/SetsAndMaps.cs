@@ -161,9 +161,9 @@ public static class SetsAndMaps
     /// </summary>
     public static string[] EarthquakeDailySummary()
     {
-        const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+        const string url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
         using var client = new HttpClient();
-        using var getRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+        using var getRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
         using var jsonStream = client.Send(getRequestMessage).Content.ReadAsStream();
         using var reader = new StreamReader(jsonStream);
         var json = reader.ReadToEnd();
