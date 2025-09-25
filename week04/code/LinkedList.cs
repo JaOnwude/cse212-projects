@@ -33,6 +33,24 @@ public class LinkedList : IEnumerable<int>
     public void InsertTail(int value)
     {
         // TODO Problem 1
+
+        // Creating a new node
+        Node newNode = new(value);
+
+        // If the list is empty, set head and tail to the new node
+        if (_head is null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        // If the list is not empty, then add to the tail
+        else
+        {
+            newNode.Prev = _tail; // This connects new node to the current tail
+            _tail.Next = newNode; // This connects current tail to the new node
+            _tail = newNode; // This updates tail to point to the new node
+        }
+
     }
 
 
@@ -65,6 +83,24 @@ public class LinkedList : IEnumerable<int>
     public void RemoveTail()
     {
         // TODO Problem 2
+        // If the list is empty, do nothing
+        if (_head is null)
+        {
+            return;
+        }
+        // If the list has only one node, set head and tail to null
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has multiple nodes, update tail to the previous node
+        else
+        {
+            _tail = _tail.Prev; // This moves tail to the second-to-last node
+            _tail.Next = null; // This disconnects the old tail
+        }
+
     }
 
     /// <summary>
@@ -109,6 +145,40 @@ public class LinkedList : IEnumerable<int>
     public void Remove(int value)
     {
         // TODO Problem 3
+        // If the list is empty, do nothing
+        if (_head is null)
+        {
+            return;
+        }
+        // If the head contains the value, remove it
+        if (_head.Data == value)
+        {
+            RemoveHead();
+            return;
+        }
+        // Search for the node with the value
+        Node? curr = _head;
+        while (curr is not null)
+        {
+            if (curr.Data == value)
+            {
+                // If it's the tail, update tail and disconnect
+                if (curr == _tail)
+                {
+                    RemoveTail();
+                }
+                else
+                {
+                    // Connect the previous node to the next node
+                    curr.Prev.Next = curr.Next;
+                    curr.Next.Prev = curr.Prev;
+                }
+                return; // Exit after removing the first match
+            }
+            curr = curr.Next;
+        }
+
+
     }
 
     /// <summary>
@@ -117,6 +187,16 @@ public class LinkedList : IEnumerable<int>
     public void Replace(int oldValue, int newValue)
     {
         // TODO Problem 4
+        Node? curr = _head;
+        while (curr is not null)
+        {
+            if (curr.Data == oldValue)
+            {
+                curr.Data = newValue;
+            }
+            curr = curr.Next;
+        }
+
     }
 
     /// <summary>
@@ -147,7 +227,13 @@ public class LinkedList : IEnumerable<int>
     public IEnumerable Reverse()
     {
         // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+        var curr = _tail; // Start at the tail for reverse iteration
+        while (curr is not null)
+        {
+            yield return curr.Data; // Yield each item's data
+            curr = curr.Prev; // Move backward in the linked list
+        }
+
     }
 
     public override string ToString()
@@ -168,8 +254,10 @@ public class LinkedList : IEnumerable<int>
     }
 }
 
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
+public static class IntArrayExtensionMethods
+{
+    public static string AsString(this IEnumerable array)
+    {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }
